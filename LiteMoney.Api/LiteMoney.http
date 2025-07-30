@@ -1,0 +1,6 @@
+@LiteMoney_HostAddress = http://localhost:5130
+
+GET {{LiteMoney_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
