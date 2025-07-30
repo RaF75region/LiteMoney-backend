@@ -1,0 +1,7 @@
+﻿services:
+  litemoney:
+    image: litemoney
+    build:
+      context: .
+      dockerfile: LiteMoney/Dockerfile
+
