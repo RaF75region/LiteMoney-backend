@@ -9,6 +9,6 @@ public class Account
     public int CurrencyId { get; set; }
     public Currency Currency { get; set; } = null!;
 
-    public int UserId { get; set; }
-    public User User { get; set; } = null!;
+    public string UserId { get; set; } = string.Empty;
+    public ApplicationUser User { get; set; } = null!;
 }

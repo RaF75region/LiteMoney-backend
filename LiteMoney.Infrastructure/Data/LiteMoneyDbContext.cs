@@ -1,15 +1,15 @@
 using LiteMoney.Domain.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace LiteMoney.Infrastructure.Data;
 
-public class LiteMoneyDbContext : DbContext
+public class LiteMoneyDbContext : IdentityDbContext<ApplicationUser>
 {
     public LiteMoneyDbContext(DbContextOptions<LiteMoneyDbContext> options) : base(options)
     {
     }
 
-    public DbSet<User> Users => Set<User>();
     public DbSet<Currency> Currencies => Set<Currency>();
     public DbSet<Account> Accounts => Set<Account>();
     public DbSet<Category> Categories => Set<Category>();
