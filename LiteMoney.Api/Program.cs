@@ -1,6 +1,7 @@
 using LiteMoney.Infrastructure.Data;
 using LiteMoney.Application.Interfaces;
 using LiteMoney.Infrastructure.Repositories;
+using LiteMoney.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,10 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<LiteMoneyDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped(typeof(LiteMoney.Application.Interfaces.IRepository<>), typeof(LiteMoney.Infrastructure.Repositories.Repository<>));
+builder.Services.AddIdentityCore<ApplicationUser>()
+    .AddEntityFrameworkStores<LiteMoneyDbContext>();
+builder.Services.AddIdentityApiEndpoints<ApplicationUser>();
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -19,6 +24,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.MapIdentityApi<ApplicationUser>();
 
 app.UseHttpsRedirection();
 
