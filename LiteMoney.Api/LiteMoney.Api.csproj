@@ -7,9 +7,14 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5"/>
-    </ItemGroup>
+  <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5"/>
+  </ItemGroup>
+
+  <ItemGroup>
+      <ProjectReference Include="..\LiteMoney.Infrastructure\LiteMoney.Infrastructure.csproj" />
+      <ProjectReference Include="..\LiteMoney.Application\LiteMoney.Application.csproj" />
+  </ItemGroup>
 
     <ItemGroup>
       <Content Include="..\.dockerignore">

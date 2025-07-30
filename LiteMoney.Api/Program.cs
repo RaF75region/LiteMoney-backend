@@ -1,8 +1,16 @@
+using LiteMoney.Infrastructure.Data;
+using LiteMoney.Application.Interfaces;
+using LiteMoney.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddDbContext<LiteMoney.Infrastructure.Data.LiteMoneyDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped(typeof(LiteMoney.Application.Interfaces.IRepository<>), typeof(LiteMoney.Infrastructure.Repositories.Repository<>));
 
 var app = builder.Build();
 
