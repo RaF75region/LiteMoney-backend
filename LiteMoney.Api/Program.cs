@@ -2,6 +2,7 @@ using LiteMoney.Infrastructure.Data;
 using LiteMoney.Application.Interfaces;
 using LiteMoney.Infrastructure.Repositories;
 using LiteMoney.Domain.Models;
+using LiteMoney.Infrastructure.GroupMaps;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.Services.AddIdentityCore<ApplicationUser>()
     .AddEntityFrameworkStores<LiteMoneyDbContext>();
 builder.Services.AddIdentityApiEndpoints<ApplicationUser>();
 builder.Services.AddAuthorization();
+builder.Services.AddEndpointGroups(typeof(AccountGroupMap).Assembly);
 
 var app = builder.Build();
 
@@ -28,6 +30,7 @@ if (app.Environment.IsDevelopment())
 app.MapIdentityApi<ApplicationUser>();
 
 app.UseHttpsRedirection();
+app.MapEndpointGroups();
 
 var summaries = new[]
 {
@@ -47,6 +50,7 @@ app.MapGet("/weatherforecast", () =>
         return forecast;
     })
     .WithName("GetWeatherForecast");
+
 
 app.Run();
 
