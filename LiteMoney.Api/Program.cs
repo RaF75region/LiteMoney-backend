@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<LiteMoneyDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped(typeof(LiteMoney.Application.Interfaces.IRepository<>), typeof(LiteMoney.Infrastructure.Repositories.Repository<>));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddIdentityCore<ApplicationUser>()
     .AddEntityFrameworkStores<LiteMoneyDbContext>();
 builder.Services.AddIdentityApiEndpoints<ApplicationUser>();
