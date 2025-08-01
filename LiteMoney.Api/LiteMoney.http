@@ -4,3 +4,224 @@ GET {{LiteMoney_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+###
+GET http://localhost/accounts
+
+###
+POST http://localhost/accounts
+
+###
+GET http://localhost/accounts/{{id}}
+
+###
+DELETE http://localhost/accounts/{{id}}
+
+###
+GET http://localhost/categories
+
+###
+POST http://localhost/categories
+
+###
+GET http://localhost/categories/{{id}}
+
+###
+DELETE http://localhost/categories/{{id}}
+
+###
+GET http://localhost/transactions
+
+###
+POST http://localhost/transactions
+
+###
+GET http://localhost/transactions/{{id}}
+
+###
+DELETE http://localhost/transactions/{{id}}
+
+###
+GET http://localhost/accounts
+
+###
+POST http://localhost/accounts
+
+###
+GET http://localhost/accounts/{{id}}
+
+###
+DELETE http://localhost/accounts/{{id}}
+
+###
+GET http://localhost/categories
+
+###
+POST http://localhost/categories
+
+###
+GET http://localhost/categories/{{id}}
+
+###
+DELETE http://localhost/categories/{{id}}
+
+###
+GET http://localhost/accounts
+
+###
+GET http://localhost:5130/confirmEmail?
+    userId={{$placeholder}}&
+    code={{$placeholder}}&
+    changedEmail={{$placeholder}}
+
+###
+POST http://localhost:5130/forgotPassword
+
+###
+POST http://localhost:5130/login?
+    useCookies={{$placeholder}}&
+    useSessionCookies={{$placeholder}}
+
+###
+POST http://localhost:5130/manage/2fa
+
+###
+GET http://localhost:5130/manage/info
+
+###
+POST http://localhost:5130/manage/info
+
+###
+POST http://localhost:5130/refresh
+
+###
+POST http://localhost:5130/register
+
+###
+POST http://localhost:5130/resendConfirmationEmail
+
+###
+POST http://localhost:5130/resetPassword
+
+###
+POST http://localhost:5130/register
+
+###
+POST http://localhost:5130/transactions
+
+<> 2025-07-30T224609.400.txt
+
+###
+GET http://localhost:5130/manage/info
+
+###
+GET http://localhost:5130/confirmEmail?
+    userId={{$placeholder}}&
+    code={{$placeholder}}&
+    changedEmail={{$placeholder}}
+
+###
+GET http://localhost:5130/confirmEmail?
+    userId={{$placeholder}}&
+    code={{$placeholder}}&
+    changedEmail={{$placeholder}}
+
+###
+POST http://localhost:5130/forgotPassword
+
+###
+POST http://localhost:5130/login?
+    useCookies={{$placeholder}}&
+    useSessionCookies={{$placeholder}}
+
+###
+POST http://localhost:5130/manage/2fa
+
+###
+GET http://localhost:5130/manage/info
+
+###
+POST http://localhost:5130/manage/info
+
+###
+POST http://localhost:5130/refresh
+
+###
+POST http://localhost:5130/register
+
+###
+POST http://localhost:5130/resendConfirmationEmail
+
+###
+POST http://localhost:5130/resetPassword
+
+###
+GET http://localhost:5130/confirmEmail?
+    userId={{$placeholder}}&
+    code={{$placeholder}}&
+    changedEmail={{$placeholder}}
+
+###
+POST http://localhost:5130/forgotPassword
+
+###
+POST http://localhost:5130/login?
+    useCookies={{$placeholder}}&
+    useSessionCookies={{$placeholder}}
+
+###
+POST http://localhost:5130/manage/2fa
+
+###
+GET http://localhost:5130/manage/info
+
+###
+POST http://localhost:5130/manage/info
+
+###
+POST http://localhost:5130/refresh
+
+###
+POST http://localhost:5130/register
+
+###
+POST http://localhost:5130/resendConfirmationEmail
+
+###
+POST http://localhost:5130/resetPassword
+
+###
+GET http://localhost/accounts
+
+###
+POST http://localhost/accounts
+
+###
+GET http://localhost/accounts/{{id}}
+
+###
+DELETE http://localhost/accounts/{{id}}
+
+###
+GET http://localhost/categories
+
+###
+POST http://localhost/categories
+
+###
+GET http://localhost/categories/{{id}}
+
+###
+DELETE http://localhost/categories/{{id}}
+
+###
+GET http://localhost/transactions
+
+###
+POST http://localhost/transactions
+
+###
+GET http://localhost/transactions/{{id}}
+
+###
+DELETE http://localhost/transactions/{{id}}
