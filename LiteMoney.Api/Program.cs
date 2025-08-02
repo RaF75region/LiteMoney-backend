@@ -1,5 +1,6 @@
 using LiteMoney.Infrastructure.Data;
 using LiteMoney.Application.Interfaces;
+using LiteMoney.Application.Services;
 using LiteMoney.Infrastructure.Repositories;
 using LiteMoney.Domain.Models;
 using LiteMoney.Infrastructure.GroupMaps;
@@ -14,6 +15,9 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<LiteMoneyDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddIdentityCore<ApplicationUser>()
     .AddEntityFrameworkStores<LiteMoneyDbContext>();
 builder.Services.AddIdentityApiEndpoints<ApplicationUser>();

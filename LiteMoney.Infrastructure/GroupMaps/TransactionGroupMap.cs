@@ -1,5 +1,6 @@
 using System.Threading;
 using LiteMoney.Application.Interfaces;
+using LiteMoney.Application.Services;
 using LiteMoney.Domain.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -12,63 +13,31 @@ public class TransactionGroupMap : IEndpointGroup
     {
         var group = app.MapGroup("/transactions");
 
-        group.MapGet("/", async (IRepository<Transaction> repo, CancellationToken ct) =>
-            Results.Ok(await repo.GetAllAsync(ct)));
+        group.MapGet("/", async (ITransactionService service, CancellationToken ct) =>
+            Results.Ok(await service.GetAllAsync(ct)));
 
-        group.MapGet("/{id:int}", async (int id, IRepository<Transaction> repo, CancellationToken ct) =>
-            await repo.GetByIdAsync(id, ct) is Transaction transaction
+        group.MapGet("/{id:int}", async (int id, ITransactionService service, CancellationToken ct) =>
+            await service.GetByIdAsync(id, ct) is Transaction transaction
                 ? Results.Ok(transaction)
                 : Results.NotFound());
 
         group.MapPost("/", async (
             Transaction transaction,
-            IRepository<Transaction> transactionRepo,
-            IRepository<Account> accountRepo,
-            IRepository<Category> categoryRepo,
+            ITransactionService service,
             CancellationToken ct) =>
         {
-            var account = await accountRepo.GetByIdAsync(transaction.AccountId, ct);
-            var category = await categoryRepo.GetByIdAsync(transaction.CategoryId, ct);
-            if (account is null || category is null)
-                return Results.BadRequest();
-
-            await transactionRepo.AddAsync(transaction, ct);
-
-            account.Balance += category.Type == CategoryType.Expense
-                ? -transaction.Amount
-                : transaction.Amount;
-
-            accountRepo.Update(account);
-
-            await transactionRepo.SaveChangesAsync(ct);
-            return Results.Created($"/transactions/{transaction.Id}", transaction);
+            var created = await service.CreateAsync(transaction, ct);
+            return created is null
+                ? Results.BadRequest()
+                : Results.Created($"/transactions/{created.Id}", created);
         });
 
         group.MapDelete("/{id:int}", async (
             int id,
-            IRepository<Transaction> transactionRepo,
-            IRepository<Account> accountRepo,
-            IRepository<Category> categoryRepo,
+            ITransactionService service,
             CancellationToken ct) =>
-        {
-            var transaction = await transactionRepo.GetByIdAsync(id, ct);
-            if (transaction is null) return Results.NotFound();
-
-            var account = await accountRepo.GetByIdAsync(transaction.AccountId, ct);
-            var category = await categoryRepo.GetByIdAsync(transaction.CategoryId, ct);
-            if (account is null || category is null)
-                return Results.BadRequest();
-
-            transactionRepo.Remove(transaction);
-
-            account.Balance += category.Type == CategoryType.Expense
-                ? transaction.Amount
-                : -transaction.Amount;
-
-            accountRepo.Update(account);
-
-            await transactionRepo.SaveChangesAsync(ct);
-            return Results.NoContent();
-        });
+            await service.DeleteAsync(id, ct)
+                ? Results.NoContent()
+                : Results.NotFound());
     }
 }
