@@ -22,6 +22,9 @@
     <ProjectReference Include="..\LiteMoney.Domain\LiteMoney.Domain.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>
