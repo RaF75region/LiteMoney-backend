@@ -7,8 +7,9 @@ namespace LiteMoney.Application.Services;
 
 public interface IAccountService
 {
-    Task<IEnumerable<Account>> GetAllAsync(CancellationToken cancellationToken = default);
-    Task<Account?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
-    Task<Account> CreateAsync(Account account, CancellationToken cancellationToken = default);
-    Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Account>> GetAllAsync(string userId, CancellationToken cancellationToken = default);
+    Task<Account?> GetByIdAsync(int id, string userId, CancellationToken cancellationToken = default);
+    Task<Account> CreateAsync(Account account, string userId, CancellationToken cancellationToken = default);
+    Task<Account?> UpdateAsync(Account account, string userId, CancellationToken cancellationToken = default);
+    Task<bool> DeleteAsync(int id, string userId, CancellationToken cancellationToken = default);
 }
