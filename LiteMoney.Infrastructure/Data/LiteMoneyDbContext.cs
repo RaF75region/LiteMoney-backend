@@ -14,6 +14,7 @@ public class LiteMoneyDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Account> Accounts => Set<Account>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Transaction> Transactions => Set<Transaction>();
+    public DbSet<SharedAccount> SharedAccounts => Set<SharedAccount>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

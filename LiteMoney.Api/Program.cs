@@ -5,6 +5,7 @@ using LiteMoney.Application.Services;
 using LiteMoney.Infrastructure.Repositories;
 using LiteMoney.Domain.Models;
 using LiteMoney.Infrastructure.GroupMaps;
+using LiteMoney.Infrastructure.Hubs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,8 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<IAccountSharingService, AccountSharingService>();
+builder.Services.AddSignalR();
 builder.Services.AddIdentityCore<ApplicationUser>()
     .AddRoles<IdentityRole>()
     // .AddClaimsPrincipalFactory<ApplicationUser>()
@@ -47,6 +50,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapEndpointGroups();
+app.MapHub<SharingHub>("/hubs/sharing");
 
 var summaries = new[]
 {
