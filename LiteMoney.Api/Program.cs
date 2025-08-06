@@ -38,6 +38,14 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("CanDelete", policy => policy.RequireClaim("permission", "can:delete"));
 });
 
+builder.Services.AddCors(options =>
+   {
+       options.AddPolicy("AllowFrontend", policy =>
+           policy.WithOrigins("*")
+                 .AllowAnyHeader()
+                 .AllowAnyMethod());
+   });
+
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
@@ -51,7 +59,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapEndpointGroups();
 app.MapHub<SharingHub>("/hubs/sharing");
-
+app.UseCors("AllowFrontend");
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"

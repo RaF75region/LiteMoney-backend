@@ -3,6 +3,7 @@ using System;
 using LiteMoney.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LiteMoney.Infrastructure.Migrations
 {
     [DbContext(typeof(LiteMoneyDbContext))]
-    partial class LiteMoneyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250806182030_add infa")]
+    partial class addinfa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,13 +133,7 @@ namespace LiteMoney.Infrastructure.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Categories");
                 });
@@ -357,17 +354,6 @@ namespace LiteMoney.Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("LiteMoney.Domain.Models.Account", b =>
-                {
-                    b.HasOne("LiteMoney.Domain.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("LiteMoney.Domain.Models.Category", b =>
                 {
                     b.HasOne("LiteMoney.Domain.Models.ApplicationUser", "User")
                         .WithMany()
