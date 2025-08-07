@@ -3,6 +3,7 @@ using System;
 using LiteMoney.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LiteMoney.Infrastructure.Migrations
 {
     [DbContext(typeof(LiteMoneyDbContext))]
-    partial class LiteMoneyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250806191017_add icon for account")]
+    partial class addiconforaccount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,10 +37,6 @@ namespace LiteMoney.Infrastructure.Migrations
                         .HasColumnType("numeric");
 
                     b.Property<string>("Icon")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("IconColor")
                         .IsRequired()
                         .HasColumnType("text");
 

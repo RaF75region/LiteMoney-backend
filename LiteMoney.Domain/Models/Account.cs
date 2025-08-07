@@ -6,7 +6,8 @@ public class Account
     public string Name { get; set; } = string.Empty;
     public decimal Balance { get; set; }
     public string? NameCurrency { get; set; }
-
+    public string Icon { get; set; } = null!;
+    public string IconColor { get; set; } = null!;
     public string UserId { get; set; } = string.Empty;
     public ApplicationUser User { get; set; } = null!;
 }

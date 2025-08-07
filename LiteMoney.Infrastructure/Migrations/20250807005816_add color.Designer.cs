@@ -3,6 +3,7 @@ using System;
 using LiteMoney.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LiteMoney.Infrastructure.Migrations
 {
     [DbContext(typeof(LiteMoneyDbContext))]
-    partial class LiteMoneyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250807005816_add color")]
+    partial class addcolor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
