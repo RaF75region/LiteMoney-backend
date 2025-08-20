@@ -10,10 +10,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using FastEndpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
+builder.Services.AddFastEndpoints();
 builder.Services.AddDbContext<LiteMoneyDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -57,6 +59,7 @@ app.MapIdentityApi<ApplicationUser>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseFastEndpoints();
 app.MapEndpointGroups();
 app.MapHub<SharingHub>("/hubs/sharing");
 app.UseCors("AllowFrontend");

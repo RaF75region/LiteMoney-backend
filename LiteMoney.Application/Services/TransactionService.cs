@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using LiteMoney.Application.Interfaces;
@@ -24,6 +25,15 @@ public class TransactionService : ITransactionService
 
     public async Task<IEnumerable<Transaction>> GetAllAsync(CancellationToken cancellationToken = default)
         => await _transactionRepository.GetAllAsync(cancellationToken);
+
+    public async Task<IEnumerable<Transaction>> GetPaginatedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+    {
+        var transactions = await _transactionRepository.GetAllAsync(cancellationToken);
+        return transactions
+            .OrderByDescending(t => t.Date)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize);
+    }
 
     public async Task<Transaction?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         => await _transactionRepository.GetByIdAsync(id, cancellationToken);
