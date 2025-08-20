@@ -13,31 +13,31 @@ public class TransactionGroupMap : IEndpointGroup
     {
         var group = app.MapGroup("/transactions");
 
-        group.MapGet("/", async (ITransactionService service, CancellationToken ct) =>
-            Results.Ok(await service.GetAllAsync(ct)));
-
-        group.MapGet("/{id:int}", async (int id, ITransactionService service, CancellationToken ct) =>
-            await service.GetByIdAsync(id, ct) is Transaction transaction
-                ? Results.Ok(transaction)
-                : Results.NotFound());
-
-        group.MapPost("/", async (
-            Transaction transaction,
-            ITransactionService service,
-            CancellationToken ct) =>
-        {
-            var created = await service.CreateAsync(transaction, ct);
-            return created is null
-                ? Results.BadRequest()
-                : Results.Created($"/transactions/{created.Id}", created);
-        });
-
-        group.MapDelete("/{id:int}", async (
-            int id,
-            ITransactionService service,
-            CancellationToken ct) =>
-            await service.DeleteAsync(id, ct)
-                ? Results.NoContent()
-                : Results.NotFound());
+        // group.MapGet("/", async (ITransactionService service, CancellationToken ct) =>
+        //     Results.Ok(await service.GetAllAsync(ct)));
+        //
+        // group.MapGet("/{id:int}", async (int id, ITransactionService service, CancellationToken ct) =>
+        //     await service.GetByIdAsync(id, ct) is Transaction transaction
+        //         ? Results.Ok(transaction)
+        //         : Results.NotFound());
+        //
+        // group.MapPost("/", async (
+        //     Transaction transaction,
+        //     ITransactionService service,
+        //     CancellationToken ct) =>
+        // {
+        //     var created = await service.CreateAsync(transaction, ct);
+        //     return created is null
+        //         ? Results.BadRequest()
+        //         : Results.Created($"/transactions/{created.Id}", created);
+        // });
+        //
+        // group.MapDelete("/{id:int}", async (
+        //     int id,
+        //     ITransactionService service,
+        //     CancellationToken ct) =>
+        //     await service.DeleteAsync(id, ct)
+        //         ? Results.NoContent()
+        //         : Results.NotFound());
     }
 }

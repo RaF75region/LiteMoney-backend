@@ -11,7 +11,7 @@ public class LiteMoneyDbContext : IdentityDbContext<ApplicationUser>
     }
 
     public DbSet<Currency> Currencies => Set<Currency>();
-    public DbSet<Account> Accounts => Set<Account>();
+    public DbSet<Account?> Accounts => Set<Account>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Transaction> Transactions => Set<Transaction>();
     public DbSet<SharedAccount> SharedAccounts => Set<SharedAccount>();

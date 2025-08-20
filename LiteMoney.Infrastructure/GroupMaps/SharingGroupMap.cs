@@ -19,27 +19,27 @@ public class SharingGroupMap : IEndpointGroup
     {
         var group = app.MapGroup("/sharing");
 
-        group.MapPost("/accounts/{accountId:int}", async (int accountId, ShareRequest request, ClaimsPrincipal principal, UserManager<ApplicationUser> userManager, IAccountSharingService service, IHubContext<SharingHub> hub, CancellationToken ct) =>
-        {
-            var ownerId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (ownerId is null) return Results.Unauthorized();
-
-            var target = await userManager.FindByEmailAsync(request.Email);
-            if (target is null) return Results.NotFound();
-
-            await service.ShareAccountAsync(accountId, ownerId, target.Id, ct);
-            await hub.Clients.User(target.Id).SendAsync("AccountShared", accountId, ct);
-
-            return Results.Ok();
-        });
-
-        group.MapGet("/accounts", async (ClaimsPrincipal principal, IAccountSharingService service, CancellationToken ct) =>
-        {
-            var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId is null) return Results.Unauthorized();
-
-            var accounts = await service.GetSharedAccountsAsync(userId, ct);
-            return Results.Ok(accounts);
-        });
+        // group.MapPost("/accounts/{accountId:int}", async (int accountId, ShareRequest request, ClaimsPrincipal principal, UserManager<ApplicationUser> userManager, IAccountSharingService service, IHubContext<SharingHub> hub, CancellationToken ct) =>
+        // {
+        //     var ownerId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
+        //     if (ownerId is null) return Results.Unauthorized();
+        //
+        //     var target = await userManager.FindByEmailAsync(request.Email);
+        //     if (target is null) return Results.NotFound();
+        //
+        //     await service.ShareAccountAsync(accountId, ownerId, target.Id, ct);
+        //     await hub.Clients.User(target.Id).SendAsync("AccountShared", accountId, ct);
+        //
+        //     return Results.Ok();
+        // });
+        //
+        // group.MapGet("/accounts", async (ClaimsPrincipal principal, IAccountSharingService service, CancellationToken ct) =>
+        // {
+        //     var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
+        //     if (userId is null) return Results.Unauthorized();
+        //
+        //     var accounts = await service.GetSharedAccountsAsync(userId, ct);
+        //     return Results.Ok(accounts);
+        // });
     }
 }
