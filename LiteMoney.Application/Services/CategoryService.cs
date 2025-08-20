@@ -6,34 +6,33 @@ using LiteMoney.Domain.Models;
 
 namespace LiteMoney.Application.Services;
 
-public class CategoryService : ICategoryService
+public class CategoryService(ICategoryRepository categoryRepository) : ICategoryService
 {
-    private readonly IRepository<Category> _repository;
-
-    public CategoryService(IRepository<Category> repository)
-    {
-        _repository = repository;
-    }
-
-    public async Task<IEnumerable<Category>> GetAllAsync(CancellationToken cancellationToken = default)
-        => await _repository.GetAllAsync(cancellationToken);
+    public async Task<IEnumerable<Category>> GetFromUser(string userId, CancellationToken cancellationToken = default) =>
+        await categoryRepository.GetByUserIdAsync(userId, cancellationToken);
 
     public async Task<Category?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
-        => await _repository.GetByIdAsync(id, cancellationToken);
+        => await categoryRepository.GetByIdAsync(id, cancellationToken);
 
     public async Task<Category> CreateAsync(Category category, CancellationToken cancellationToken = default)
     {
-        await _repository.AddAsync(category, cancellationToken);
-        await _repository.SaveChangesAsync(cancellationToken);
+        await categoryRepository.AddAsync(category, cancellationToken);
+        await categoryRepository.SaveChangesAsync(cancellationToken);
         return category;
     }
 
     public async Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default)
     {
-        var entity = await _repository.GetByIdAsync(id, cancellationToken);
+        var entity = await categoryRepository.GetByIdAsync(id, cancellationToken);
         if (entity is null) return false;
-        _repository.Remove(entity);
-        await _repository.SaveChangesAsync(cancellationToken);
+        categoryRepository.Remove(entity);
+        await categoryRepository.SaveChangesAsync(cancellationToken);
         return true;
+    }
+
+    public async Task UpdateAsync(Category category, CancellationToken cancellationToken = default)
+    {
+        categoryRepository.Update(category);
+        await categoryRepository.SaveChangesAsync(cancellationToken);
     }
 }

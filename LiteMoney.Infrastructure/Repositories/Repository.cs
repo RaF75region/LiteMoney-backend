@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using LiteMoney.Application.Interfaces;
@@ -7,30 +8,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LiteMoney.Infrastructure.Repositories;
 
-public class Repository<T> : IRepository<T> where T : class
+public abstract class RepositoryBase<T> : IRepository<T> where T : class
 {
     private readonly LiteMoneyDbContext _context;
     private readonly DbSet<T> _dbSet;
 
-    public Repository(LiteMoneyDbContext context)
+    protected RepositoryBase(LiteMoneyDbContext context)
     {
         _context = context;
         _dbSet = _context.Set<T>();
     }
 
-    public async Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
-        => await _dbSet.FindAsync(new object?[] { id }, cancellationToken);
+    public virtual async Task<IEnumerable<T>> GetAllAsync(CancellationToken ct = default)
+        => await _dbSet.ToListAsync(ct);
 
-    public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)
-        => await _dbSet.ToListAsync(cancellationToken);
+    public virtual async Task AddAsync(T entity, CancellationToken ct = default)
+        => await _dbSet.AddAsync(entity, ct);
 
-    public async Task AddAsync(T entity, CancellationToken cancellationToken = default)
-        => await _dbSet.AddAsync(entity, cancellationToken);
+    public virtual void Update(T entity)
+        => _dbSet.Update(entity);
 
-    public void Update(T entity) => _dbSet.Update(entity);
+    public virtual void Remove(T entity)
+        => _dbSet.Remove(entity);
 
-    public void Remove(T entity) => _dbSet.Remove(entity);
-
-    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        => await _context.SaveChangesAsync(cancellationToken);
+    public virtual Task<int> SaveChangesAsync(CancellationToken ct = default)
+        => _context.SaveChangesAsync(ct);
 }

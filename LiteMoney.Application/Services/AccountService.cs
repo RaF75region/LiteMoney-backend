@@ -9,9 +9,9 @@ namespace LiteMoney.Application.Services;
 
 public class AccountService : IAccountService
 {
-    private readonly IRepository<Account> _repository;
+    private readonly IAccountRepository _repository;
 
-    public AccountService(IRepository<Account> repository)
+    public AccountService(IAccountRepository repository)
     {
         _repository = repository;
     }

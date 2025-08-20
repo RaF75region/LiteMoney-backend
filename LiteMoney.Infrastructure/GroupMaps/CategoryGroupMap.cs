@@ -13,19 +13,19 @@ public class CategoryGroupMap : IEndpointGroup
     {
         var group = app.MapGroup("/categories");
 
-        group.MapGet("/", async (ICategoryService service, CancellationToken ct) =>
-            Results.Ok(await service.GetAllAsync(ct)));
-
-        group.MapGet("/{id:int}", async (int id, ICategoryService service, CancellationToken ct) =>
-            await service.GetByIdAsync(id, ct) is Category category
-                ? Results.Ok(category)
-                : Results.NotFound());
-
-        group.MapPost("/", async (Category category, ICategoryService service, CancellationToken ct) =>
-        {
-            var created = await service.CreateAsync(category, ct);
-            return Results.Created($"/categories/{created.Id}", created);
-        });
+        // group.MapGet("/", async (ICategoryService service, CancellationToken ct) =>
+        //     Results.Ok(await service.GetAllAsync(ct)));
+        //
+        // group.MapGet("/{id:int}", async (int id, ICategoryService service, CancellationToken ct) =>
+        //     await service.GetByIdAsync(id, ct) is Category category
+        //         ? Results.Ok(category)
+        //         : Results.NotFound());
+        //
+        // group.MapPost("/", async (Category category, ICategoryService service, CancellationToken ct) =>
+        // {
+        //     var created = await service.CreateAsync(category, ct);
+        //     return Results.Created($"/categories/{created.Id}", created);
+        // });
 
         group.MapDelete("/{id:int}", async (int id, ICategoryService service, CancellationToken ct) =>
             await service.DeleteAsync(id, ct)
