@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,6 +19,21 @@ public class TransactionService : ITransactionService
         _transactionRepository = transactinoRepository;
         _accountRepository = _accountRepository;
     }
+
+    public async Task<IEnumerable<Transaction>> GetAllAsync(CancellationToken cancellationToken = default)
+        => await _transactionRepository.GetAllAsync(cancellationToken);
+
+    public async Task<IEnumerable<Transaction>> GetPaginatedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+    {
+        var transactions = await _transactionRepository.GetAllAsync(cancellationToken);
+        return transactions
+            .OrderByDescending(t => t.Date)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize);
+    }
+
+    public async Task<Transaction?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        => await _transactionRepository.GetByIdAsync(id, cancellationToken);
 
     public async Task<Transaction?> CreateAsync(Transaction transaction, int accountId, Category category, CancellationToken cancellationToken = default)
     {
