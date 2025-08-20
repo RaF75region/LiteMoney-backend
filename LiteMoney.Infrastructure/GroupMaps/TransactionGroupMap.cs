@@ -13,8 +13,12 @@ public class TransactionGroupMap : IEndpointGroup
     {
         var group = app.MapGroup("/transactions");
 
-        group.MapGet("/", async (ITransactionService service, CancellationToken ct) =>
-            Results.Ok(await service.GetAllAsync(ct)));
+        group.MapGet("/", async (
+            int pageNumber = 1,
+            int pageSize = 10,
+            ITransactionService service,
+            CancellationToken ct) =>
+            Results.Ok(await service.GetPaginatedAsync(pageNumber, pageSize, ct)));
 
         group.MapGet("/{id:int}", async (int id, ITransactionService service, CancellationToken ct) =>
             await service.GetByIdAsync(id, ct) is Transaction transaction
